@@ -1,9 +1,10 @@
 # Reproducibility Package for HSCC Submission: Safe Temperature Regulation: Formally Verified and Real-World Validated
 
+The full contents of the package can be found [here](https://github.com/cisasam/SafeTemperatureReproducibilityHSCC2025).
+
 This is the reproducibility package for Safe Temperature Regulation: Formally Verified and Real-World Validated submitted to HSCC 2025.
 It contains the data from the experiments and a docker container to run the proofs.
 
-The contents can be found [here](https://github.com/cisasam/SafeTemperatureReproducibilityHSCC2025).
 
 ## Content
 Docker scripts for the proof:
