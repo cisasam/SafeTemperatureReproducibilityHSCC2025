@@ -10,10 +10,10 @@ Definitions
     Real voltage;
     Real maxCurrent;
     
-    /* The temperature a safe controller should never exceed. */
+    /* The temperature a safe system should never exceed. */
     Real maxTemp;
     
-    
+    /* The temperature a safe system should never fall below */
     Real minTemp;
     
     /* The time between two samples. The controller never stays idle for longer than time periodTime. */
@@ -34,18 +34,21 @@ Definitions
                         };};
     HP heatDynamics ::= {t:=0;{heatDynamicsA;++heatDynamicsB;}*};
     
+    /* Controller decision bound to heat */
     Real heatingBound = (maxTemp*(gHeater + gBox) - gBox * tRoom)/gHeater - voltage*maxCurrent*periodTime/cHeater;
     Bool safeToHeat(Real currentHeaterTemperature) <-> currentHeaterTemperature<=heatingBound;
     
+    /* Controller decision bound to cool */
     Real coolingBound = ((minTemp*(gHeater + gBox) - gBox * tRoom)/gHeater) * (cHeater/(cHeater - gHeater * periodTime));
     Bool safeToCool(Real currentHeaterTemperature) <-> currentHeaterTemperature>=coolingBound;
     
+    /* Heater temperature approximations */
     Real upperBoundHeater(Real currentHeaterTemperature, Real time) = (voltage*maxCurrent*time)/cHeater + currentHeaterTemperature;
     Real lowerBoundHeater(Real currentHeaterTemperature, Real time) = currentHeaterTemperature - (gHeater*currentHeaterTemperature*time)/cHeater;
     
     Real boxCriticalPoint(Real heaterTemperature) = (gHeater/(gHeater+gBox))*heaterTemperature + (gBox*tRoom/(gHeater+gBox));
     
-    
+    /* Controller */
     HP controller ::= {{current:=0;?safeToCool(tHeater);};++{current:=maxCurrent;?safeToHeat(tHeater);}};
     
 End.
@@ -56,10 +59,8 @@ ProgramVariables
     
     Real t; /* A variable for time in the continuous dynamics */
     
-    Real current; /* We potentially control the current, too. (Since current and voltage are symmetric for us, we can change it to voltage easily, if that is what happens in practical cases.)*/
+    Real current;
 End.
-
-/* Assumptions to discuss: temperature of the room could be negative in arctic. But we work in K */
 
 Problem
   (
