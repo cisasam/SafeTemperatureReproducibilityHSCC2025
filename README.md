@@ -7,15 +7,16 @@ This package consists of two parts. First the artifacts used to verify the corre
 To replicate the claims of the paper, this package contains a proof script, which contains the formalized proof of correctness of the controller. It uses the KeYmaera X theorem prover. The formal proof can be found in proof.kyx. It contains the model description (in differential dynamic logic) and a proof tactic (in the Bellerophone tactic language). The model can be seen to coincide withe the model discussed in the paper. To verify the correctness of the proof KeYmaera X can be used. For convenience we provide a Docker container. Alternatively a local installation can also be used. Instructions for both can be found below.
 
 
-## Content
+
+
+
+## Setup and Checking the Proofs
+### Content
 Docker scripts for the proof:
 - setup.sh: the setup script for creating the Docker container.
 - Dockerfile: the Docker configuration file used by setup.sh.
 - keymaerax.math.conf: the KeYmaera X configuration file used in setup.sh.
 - check_all.sh: the run script to check all the proofs.
-
-
-## Setup and Checking the Proofs
 
 In order to run the scripts, Docker needs to be installed on your machine and working correctly, see [docs.docker.com/get-docker/](https://docs.docker.com/get-docker/). KeYmaera X (which can be installed locally [here](https://keymaerax.org/download.html)) requires Wolfram Engine for QE. The Wolfram Engine license can be obtained for free and you will be prompted during the setup to login with your account.
 
