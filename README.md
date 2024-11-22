@@ -2,8 +2,9 @@
 
 The full contents of the package can be found [here](https://github.com/cisasam/SafeTemperatureReproducibilityHSCC2025).
 
-This is the reproducibility package for Safe Temperature Regulation: Formally Verified and Real-World Validated submitted to HSCC 2025.
-It contains the data from the experiments and a docker container to run the proofs.
+This package consists of two parts. First the artifacts used to verify the correctness of the controller. Second, it contains the raw experimental data, collected on the incubator model. Some of which was discussed in the paper. Additional collected data was included for further confirmation of the experimental outcome.
+
+To replicate the claims of the paper, this package contains a proof script, which contains the formalized proof of correctness of the controller. It uses the KeYmaera X theorem prover. The formal proof can be found in proof.kyx. It contains the model description (in differential dynamic logic) and a proof tactic (in the Bellerophone tactic language). The model can be seen to coincide withe the model discussed in the paper. To verify the correctness of the proof KeYmaera X can be used. For convenience we provide a Docker container. Alternatively a local installation can also be used. Instructions for both can be found below.
 
 
 ## Content
@@ -13,22 +14,6 @@ Docker scripts for the proof:
 - keymaerax.math.conf: the KeYmaera X configuration file used in setup.sh.
 - check_all.sh: the run script to check all the proofs.
 
-Data:
-- Data used in the paper:
-  - Clean data:
-    - `params1-state.csv` contains the data from the first experiment after cleanup.
-    - `params2-state.csv` contains the data from the second experiment after cleanup. 
-    - `cbair-error-state.csv` contains the data from the third experiment after cleanup.
-    - `gbox-error-state.csv` contains the data from the fourth experiment after cleanup.
-    - `visualization.py` is a script that plots the data to obtain the image shown in the paper.
-  - Original data 
-    - `params1-state-original.csv`, `params2-state-original.csv`, `cbair-error-state-original.csv`, `gbox-error-state-original.csv` contain the data from before cleanup.
-- Unused data:
-  - Controller data 
-    - `params1-cont.csv`, `params2-cont.csv`, `cbair-error-cont.csv`, `gbox-error-cont.csv` contain the controller data after cleanup, including decision bounds and estimated `T_h`.
-    - `params1-cont-original.csv`, `params2-cont-original.csv`, `cbair-error-cont-original.csv`, `gbox-error-cont-original.csv` contain the controller data before cleanup.
-  - Extra experiment
-    - `35-40-state-original.csv`, `35-40-state.csv`, `35-40-cont-original.csv`, `35-40-cont.csv` contain data from an experiment with bigger safety bounds unused in the paper.
 
 ## Setup and Checking the Proofs
 
@@ -46,12 +31,34 @@ Finished checking proof in KeYmaera X.
 *******************************************************************************
 ```
 
-## Data and Experimental Validation
+This output means that KeYmaera X was able to proof the problem stated in proof.kyx with the associated tactic.
+
+You can also check the proof with a local installation of KeYmaera X. A Wolfram Engine license is still needed. In order to do that just place the file `proof.kyx` on the same folder as the `keymaerax.jar` file and run the command `java -jar keymaerax.jar -prove proof.kyx`
+
+## Experimental Data and Validation
 The experimental data was obtained from the real-world incubator. The code can be checked in the following [github](https://github.com/cisasam/incubator_kyx_safe). The controller is [here](https://github.com/cisasam/incubator_kyx_safe/blob/master/software/incubator/physical_twin/controller_from_kyx.py) and the parameters used in the different experiments can be seen [here](https://github.com/cisasam/incubator_kyx_safe/blob/master/software/startup.conf).
 
 The state data is directly collected from the incubator low level driver and contains the readings from the sensors. It has 12 columns representing the time (in epoch), the temperatures of the three sensors (two inside the incubator one outside to measure room temperature) and its reading time, booleans signaling if the heater and the fan are on, the controller time step and the elapsed time from ordering the readings to the message being passed. 
 
 The controller data is collected from the controller running in a separate computer. It has 9 columns showing the time (in epoch), the plant time (as of the last sensor data passed to the controller), the orders to the fan and heater (to be actuated by the low level driver), the safety bounds, the estimated heater temperature and the controller decision bounds.
+
+The following data is contained in this package:
+
+- Data used in the paper:
+  - Clean data:
+    - `params1-state.csv` contains the data from the first experiment after cleanup.
+    - `params2-state.csv` contains the data from the second experiment after cleanup. 
+    - `cbair-error-state.csv` contains the data from the third experiment after cleanup.
+    - `gbox-error-state.csv` contains the data from the fourth experiment after cleanup.
+    - `visualization.py` is a script that plots the data to obtain the image shown in the paper.
+  - Original data 
+    - `params1-state-original.csv`, `params2-state-original.csv`, `cbair-error-state-original.csv`, `gbox-error-state-original.csv` contain the data from before cleanup.
+- Unused data:
+  - Controller data 
+    - `params1-cont.csv`, `params2-cont.csv`, `cbair-error-cont.csv`, `gbox-error-cont.csv` contain the controller data after cleanup, including decision bounds and estimated `T_h`.
+    - `params1-cont-original.csv`, `params2-cont-original.csv`, `cbair-error-cont-original.csv`, `gbox-error-cont-original.csv` contain the controller data before cleanup.
+  - Extra experiment
+    - `35-40-state-original.csv`, `35-40-state.csv`, `35-40-cont-original.csv`, `35-40-cont.csv` contain data from an experiment with bigger safety bounds unused in the paper.
 
 
 ## System Specs
