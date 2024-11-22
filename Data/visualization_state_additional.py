@@ -15,8 +15,8 @@ def plot_incubator_data(data):
 
     
 
-    ax1.hlines(y=37.75, colors='k', xmin=0, xmax=((data['time'].iloc[-1])-data["time"][0])/10e8, label='Bounds')
-    ax1.hlines(y=36.5, colors='k', xmin=0, xmax=((data['time'].iloc[-1])-data["time"][0])/10e8)
+    ax1.hlines(y=40, colors='k', xmin=0, xmax=((data['time'].iloc[-1])-data["time"][0])/10e8, label='Bounds')
+    ax1.hlines(y=35, colors='k', xmin=0, xmax=((data['time'].iloc[-1])-data["time"][0])/10e8)
     ax1.set_ylabel("Temperature (°C)")
     ax1.set_xlabel("time (s)")
 
@@ -33,8 +33,8 @@ def plot_incubator_data(data):
 if __name__ == '__main__':
     if not ('state' in sys.argv[1]):
         print("Please use this script with data from the low level driver (marked as state in the csv name)")
-    elif ('35-40' in sys.argv[1]):
-        print("Please use the dedicated script for the additional experiment to show the correct bounds.")
+    elif not ('35-40' in sys.argv[1]):
+        print("This script is meant exclusively for the additional experiment, please use the generic one in order to properly show the bounds.")
     else:
         data = p.read_csv(sys.argv[1])
         fig = plot_incubator_data(data)

@@ -1,6 +1,6 @@
 # Reproducibility Package for HSCC Submission: Safe Temperature Regulation: Formally Verified and Real-World Validated
 
-The full contents of the package can be found [here](https://github.com/cisasam/SafeTemperatureReproducibilityHSCC2025).
+**The full contents of the package can be found [here](https://github.com/cisasam/SafeTemperatureReproducibilityHSCC2025).**
 
 This package consists of two parts. First the artifacts used to verify the correctness of the controller. Second, it contains the raw experimental data, collected on the incubator model. Some of which was discussed in the paper. Additional collected data was included for further confirmation of the experimental outcome.
 
@@ -17,7 +17,7 @@ Docker scripts for the proof:
 
 ## Setup and Checking the Proofs
 
-In order to run the scripts, Docker needs to be installed on your machine and working correctly, see [docs.docker.com/get-docker/](https://docs.docker.com/get-docker/). KeYmaera X requires Wolfram Engine for QE. The Wolfram Engine license can be obtained for free and you will be prompted during the setup to login with your account.
+In order to run the scripts, Docker needs to be installed on your machine and working correctly, see [docs.docker.com/get-docker/](https://docs.docker.com/get-docker/). KeYmaera X (which can be installed locally [here](https://keymaerax.org/download.html)) requires Wolfram Engine for QE. The Wolfram Engine license can be obtained for free and you will be prompted during the setup to login with your account.
 
 1. Run `./setup.sh`. This script creates a docker image with all necessary components to run KeYmaera X and check the proof.
 2. Log in with a Wolfram ID with a Wolfram Engine license when prompted. It can be obtained [here](https://wolfram.com/engine/free-license) for free.
@@ -46,7 +46,7 @@ The following data is contained in this package:
 
 - Data used in the paper:
   - Clean data:
-    - `params1-state.csv` contains the data from the first experiment after cleanup.
+    - `params1-state.csv` contains the data from the first experiment after cleanup (i.e. no initialization phase).
     - `params2-state.csv` contains the data from the second experiment after cleanup. 
     - `cbair-error-state.csv` contains the data from the third experiment after cleanup.
     - `gbox-error-state.csv` contains the data from the fourth experiment after cleanup.
@@ -60,6 +60,10 @@ The following data is contained in this package:
   - Extra experiment
     - `35-40-state-original.csv`, `35-40-state.csv`, `35-40-cont-original.csv`, `35-40-cont.csv` contain data from an experiment with bigger safety bounds unused in the paper.
 
-
+Additionally three visualization scripts are given:
+- Visualization scripts:
+  - `visualization_cont.py` plots relevant information from controller data. Specifically, the script plots the estimated heater temperature and the decision bounds for the controller.
+  - `visualization_state.py` plots relevant information from state data. Specifically, the script plots the average temperature of the two sensors and the safety bounds to show safety in the experimental runs. Keep in mind that when used with original data it will show the inizialization phase (i.e. the time it gets the system to heat up to the safety bounds from room temperature).
+  -  `visualization_state_additional.py` plots relevant information from state data from the additional experiment. It shows the same information as the previous script but with the adjusted bounds.
 ## System Specs
 The proof and the incubator controller were run on a MacBook Pro 2021 with 16GB of RAM and an Apple M1 Pro microprocessor, on which the proofs can be checked in a roughly 5 minutes. The incubator specs are describe in this arxiv [publication](https://arxiv.org/abs/2102.10390).
