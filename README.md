@@ -50,7 +50,7 @@ The following data is contained in this package:
     - `params2-state.csv` contains the data from the second experiment after cleanup. 
     - `cbair-error-state.csv` contains the data from the third experiment after cleanup.
     - `gbox-error-state.csv` contains the data from the fourth experiment after cleanup.
-    - `visualization.py` is a script that plots the data to obtain the image shown in the paper.
+    - `build_paper_image.py` is a script that plots the data to obtain the image shown in the paper.
   - Original data 
     - `params1-state-original.csv`, `params2-state-original.csv`, `cbair-error-state-original.csv`, `gbox-error-state-original.csv` contain the data from before cleanup.
 - Unused data:
